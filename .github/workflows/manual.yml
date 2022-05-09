@@ -49,10 +49,6 @@ jobs:
       - name: Check directory
         run: ls
 
-      - name: Lint
-        run: |
-          npm run lint
-
       - name: Test
         run: |
-          npm run test
+          npm run ci:test
