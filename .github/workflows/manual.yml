@@ -6,6 +6,10 @@ on:
  push:
     branches: [main]
 
+defaults:
+  run:
+    working-directory: ./my-plan
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   ci:
@@ -24,7 +28,6 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Cache node modules
-        working-directory: ./my-plan
         id: cache-nodemodules
         uses: actions/cache@v2
         env:
@@ -39,17 +42,14 @@ jobs:
             ${{ runner.os }}-
 
       - name: Install Dependencies
-        working-directory: ./my-plan
         if: steps.cache-nodemodules.outputs.cache-hit != 'true'
         run: |
           npm install
 
       - name: Lint
-        working-directory: ./my-plan
         run: |
           npm run lint
 
       - name: Test
-        working-directory: ./my-plan
         run: |
           npm run test
